@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Akinator.iml" filepath="$PROJECT_DIR$/Akinator.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ProjetAkinator.iml" filepath="$PROJECT_DIR$/.idea/modules/ProjetAkinator.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ProjetAkinator-build.iml" filepath="$PROJECT_DIR$/.idea/modules/ProjetAkinator-build.iml" />
     </modules>
   </component>
 </project>
