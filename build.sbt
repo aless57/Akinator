@@ -1,4 +1,4 @@
-name := "ProjetAkinator"
+name := "Akinator"
 
 version := "0.1"
 

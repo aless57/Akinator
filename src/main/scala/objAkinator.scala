@@ -14,7 +14,11 @@ object objAkinator {
     println("Hello, world!")
   }
 
+  /* Q1 Q2 */
+
   def jeuSimple(a:ABanimal,it:Iterator[String]) : Boolean = a match {
+
+    //cas où on arrive sur une question
     case Question(question, oui, non) => {
       println(question)
       val response = it.next()
@@ -25,6 +29,8 @@ object objAkinator {
         jeuSimple(a, it)
       }
     }
+
+    //cas où on arrive en bout d'arbre
     case Animal(nom) => {
       println("Pensez-vous à : "+nom)
       val r = it.next()
@@ -37,6 +43,8 @@ object objAkinator {
     }
   }
 
+
+  /* Q3 */
 
   def jeuLog(a:ABanimal,it:Iterator[String]) : List[String] = {
 
@@ -84,8 +92,10 @@ object objAkinator {
     aux(a,List())
   }
 
+  /* Q4 */
   def jeuApprentissage(a:ABanimal,it:Iterator[String]): ABanimal = a match {
-      //Dans le cas où nous sommes face à une question
+
+    //Dans le cas où nous sommes face à une question
     case Question(q, o, n) => {
       println(q)
       val iter = it.next()
@@ -102,7 +112,70 @@ object objAkinator {
         jeuApprentissage(a, it)
       }
     }
+    case Animal(a) => {
+      println("Pensez-vous à : " + a)
+      val rep = it.next()
+      if(rep == "o"){
+        println("J'ai gagné !")
+        Animal(a)
+      }else if(rep == "n"){
+        println("J'ai perdu ! Quelle est la bonne réponse ? ")
+        val res = it.next()
+        println("Quelle question permet de différencier " + res + " de " + a +" ?")
+        val q = it.next()
+        println("Quelle est la réponse à cette question pour " + res + " ?")
+        val repQ = it.next()
+        if(repQ == "o"){
+          Question(q,Animal(res),Animal(a))
+        }else if(repQ == "n"){
+          Question(q,Animal(a),Animal(res))
+        }else
+          throw new Exception("Réponse non valide")
+      }else
+        throw new Exception("Réponse non valide")
+
+    }
   }
+
+  /* Q5 */
+
+  def lecture(f: Iterator[String]): ABanimal = {
+    val nextVal = f.next()
+    if (nextVal.startsWith("Question :")) Question(nextVal.slice(10, nextVal.length), lecture(f), lecture(f))
+    else Animal(nextVal)
+  }
+
+  def fichierToABanimal(nomf : String) :ABanimal = {
+    try{
+      val fichier = Source.fromFile("src/" + nomf)
+      val file = fichier.getLines().toList.iterator
+      fichier.close()
+      lecture(file)
+    }
+    catch {
+    case e : FileNotFoundException => throw new FileNotFoundException("Le fichier n'existe pas")
+  }
+  }
+
+  /* Q6 */
+
+  def ABanimalToFichier(nomf : String, a : ABanimal) : Unit = {
+
+    def auxABanimalToFichier(f : FileWriter, ab : ABanimal) : Unit = ab match{
+      case Animal(animal) => f.write(animal + "\r\n")
+      case Question(q, o, n) => f.write("Question :" + q + "\r\n");
+        auxABanimalToFichier(f, o);
+        auxABanimalToFichier(f, n)
+    }
+
+    val ecriture = new FileWriter(new File("src/" + nomf));
+    auxABanimalToFichier(ecriture, a)
+    ecriture.close()
+  }
+
+  /* Q7 */
+
+
 
 
 
