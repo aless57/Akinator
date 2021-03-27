@@ -43,7 +43,6 @@ class testAkinator extends FunSuite{
   }
 
  /*Test de JeuApprentissage*/
-  /*Refaire d'autres tests peut etre*/
   test("jeuApprentissage 1"){
     val ret = jeuApprentissage(a,List("o","o","o","n","Chauve-souris","Est-ce une maladie pour cet animal ?","o").iterator)
     val a2 = Question("Est-ce qu'il a des ailes ?",
@@ -108,5 +107,18 @@ class testAkinator extends FunSuite{
     val a2 = fichierToABanimal("test2Q6.txt")
     assert(ret.equals(a2))
   }
+
+  /*Test jeuSimpleJNSP*/
+  test("jeuSimpleJNSP 1 "){
+    var bool = jeuSimpleJNSP(a, List("o","x","x","n","n","o","o").iterator)
+    assert(bool)
+  }
+
+  test("jeuSimpleJNSP 2 "){
+    var bool = jeuSimpleJNSP(a, List("o","x","x","n","n","o","n").iterator)
+    assert(!bool)
+  }
+
+
 
 }
